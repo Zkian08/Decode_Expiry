@@ -107,6 +107,37 @@ button:hover {
   color: #b00020;
   font-weight: 600;
 }
+
+/* =========================
+   Footer
+========================= */
+footer {
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    background: rgba(0,0,0,0.25);
+    color: white;
+    font-size: 14px;
+    backdrop-filter: blur(6px);
+}
+
+/* =========================
+   Mobile
+========================= */
+@media (max-width: 600px) {
+    .icon-button {
+        padding: 12px;
+    }
+
+    .icon-button img {
+        width: 55px;
+        height: 55px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+}
 </style>
 </head>
 
@@ -147,6 +178,10 @@ button:hover {
 
   <div class="result" id="result"></div>
 </div>
+
+<footer>
+    © By Enriquez, Neil Ian || Sphyx Gaming 2026
+</footer>
 
 <script>
 function toggleInfo() {
@@ -202,3 +237,4 @@ function decodeSnapple() {
 
 </body>
 </html>
+
