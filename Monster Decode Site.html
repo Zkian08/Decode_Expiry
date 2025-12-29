@@ -8,17 +8,33 @@
 <style>
 * { box-sizing: border-box; }
 
+/* =====================
+   Body Layout
+===================== */
 body {
   margin: 0;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
 }
 
+/* =====================
+   Center Wrapper
+===================== */
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* =====================
+   Card
+===================== */
 .card {
   width: 100%;
   max-width: 420px;
@@ -114,35 +130,54 @@ button:hover {
   color: #ff5252;
   font-weight: 600;
 }
+
+/* =====================
+   Footer
+===================== */
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  font-size: 13px;
+  color: #ccc;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+}
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>Monster Code Decoder</h1>
-  <div class="subtitle">Decode production & expiry dates</div>
+<div class="main">
+  <div class="card">
+    <h1>Monster Code Decoder</h1>
+    <div class="subtitle">Decode production & expiry dates</div>
 
-  <div class="info-wrapper">
-    <span class="info-btn" onclick="toggleInfo()">ℹ️</span>
+    <div class="info-wrapper">
+      <span class="info-btn" onclick="toggleInfo()">ℹ️</span>
+    </div>
+
+    <div class="info-box" id="infoBox">
+      <strong>How Monster Codes Work</strong><br><br>
+      • First letter = production month (A = Jan, B = Feb, etc.)<br>
+      • Next two digits = last two digits of the year<br>
+      • Next two digits = day of the month<br>
+      • Remaining characters = facility, line & time<br><br>
+      <strong>Monster cans shelf life:</strong> 2 years (730 days)
+    </div>
+
+    <label for="code">Monster Product Code</label>
+    <input type="text" id="code" placeholder="e.g. K1428DP8">
+
+    <button onclick="decodeMonster()">Decode Code</button>
+
+    <div class="result" id="result"></div>
   </div>
-
-  <div class="info-box" id="infoBox">
-    <strong>How Monster Codes Work</strong><br><br>
-    • First letter = production month (A = Jan, B = Feb, etc.)<br>
-    • Next two digits = last two digits of the year<br>
-    • Next two digits = day of the month<br>
-    • Remaining characters = facility, line & time<br><br>
-    <strong>Monster cans shelf life:</strong> 2 years (730 days)
-  </div>
-
-  <label for="code">Monster Product Code</label>
-  <input type="text" id="code" placeholder="e.g. K1428DP8">
-
-  <button onclick="decodeMonster()">Decode Code</button>
-
-  <div class="result" id="result"></div>
 </div>
+
+<footer>
+  © by Enriquez, Neil Ian || Sphyx Gaming
+</footer>
 
 <script>
 function toggleInfo() {
@@ -168,7 +203,7 @@ function decodeMonster() {
     return;
   }
 
-  const month = monthIndex; // JS months start at 0
+  const month = monthIndex;
   const year = 2000 + parseInt(code.substr(1, 2));
   const day = parseInt(code.substr(3, 2));
 
@@ -178,7 +213,6 @@ function decodeMonster() {
   }
 
   const productionDate = new Date(year, month, day);
-
   const expiryDate = new Date(productionDate);
   expiryDate.setFullYear(expiryDate.getFullYear() + 2);
 
@@ -193,6 +227,3 @@ function decodeMonster() {
 
 </body>
 </html>
-
-
-
