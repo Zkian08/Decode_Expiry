@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Snapple Code Decoder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffecd2, #fcb69f);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #333;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 22px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.info-wrapper {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.info-btn {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.info-box {
+  display: none;
+  background: #f8f4f0;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+}
+
+button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background: #ff7043;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #f4511e;
+}
+
+.result {
+  margin-top: 22px;
+  padding: 16px;
+  background: #f3f6fa;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.error {
+  color: #b00020;
+  font-weight: 600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Snapple Code Decoder</h1>
+  <div class="subtitle">Decode production & expiry dates</div>
+
+  <div class="info-wrapper">
+    <span class="info-btn" onclick="toggleInfo()">ℹ️</span>
+  </div>
+
+  <div class="info-box" id="infoBox">
+    <strong>How Snapple Codes Work</strong><br><br>
+    • First letters = manufacturing plant<br>
+    • First number = day of month produced<br>
+    • Letter = month (A–L)<br>
+    • Next two digits = year produced<br>
+    • Letter = production shift<br>
+    • Time = military production time<br><br>
+    <strong>Shelf life depends on flavor</strong>
+  </div>
+
+  <label for="code">Snapple Product Code</label>
+  <input type="text" id="code" placeholder="e.g. LVC 24 J 20 B 19:31">
+
+  <label for="flavor">Snapple Flavor</label>
+  <select id="flavor">
+    <option value="default">Default (9 months)</option>
+    <option value="360">Tea Lemon (360 days)</option>
+    <option value="420">Tea Peach (420 days)</option>
+    <option value="270">Fruit Punch (270 days)</option>
+    <option value="270">Kiwi-Strawberry (270 days)</option>
+  </select>
+
+  <button onclick="decodeSnapple()">Decode Code</button>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+function toggleInfo() {
+  const box = document.getElementById("infoBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function decodeSnapple() {
+  const input = document.getElementById("code").value.toUpperCase().trim();
+  const flavorValue = document.getElementById("flavor").value;
+  const resultDiv = document.getElementById("result");
+
+  const parts = input.split(/\s+/);
+
+  if (parts.length < 6) {
+    resultDiv.innerHTML = '<span class="error">Invalid code format.</span>';
+    return;
+  }
+
+  const day = parseInt(parts[1]);
+  const monthLetter = parts[2];
+  const year = 2000 + parseInt(parts[3]);
+
+  const months = "ABCDEFGHIJKL";
+  const monthIndex = months.indexOf(monthLetter);
+
+  if (isNaN(day) || monthIndex === -1 || isNaN(year)) {
+    resultDiv.innerHTML = '<span class="error">Invalid date values.</span>';
+    return;
+  }
+
+  const productionDate = new Date(year, monthIndex, day);
+  const expiryDate = new Date(productionDate);
+
+  let shelfLifeText = "9 months";
+
+  if (flavorValue === "default") {
+    expiryDate.setMonth(expiryDate.getMonth() + 9);
+  } else {
+    const days = parseInt(flavorValue);
+    expiryDate.setDate(expiryDate.getDate() + days);
+    shelfLifeText = `${days} days`;
+  }
+
+  resultDiv.innerHTML = `
+    <strong>Decoded Results</strong><br><br>
+    <strong>Production Date:</strong> ${productionDate.toDateString()}<br>
+    <strong>Expiry Date:</strong> ${expiryDate.toDateString()}<br><br>
+    <strong>Shelf Life:</strong> ${shelfLifeText}
+  `;
+}
+</script>
+
+</body>
+</html>

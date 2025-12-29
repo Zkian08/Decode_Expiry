@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Monster Energy Code Decoder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #fff;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #111;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 22px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+.info-wrapper {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.info-btn {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.info-box {
+  display: none;
+  background: #1e1e1e;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  color: #ddd;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #000;
+  color: #fff;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background: #4caf50;
+  color: #000;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #43a047;
+}
+
+.result {
+  margin-top: 22px;
+  padding: 16px;
+  background: #1a1a1a;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.error {
+  color: #ff5252;
+  font-weight: 600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Monster Code Decoder</h1>
+  <div class="subtitle">Decode production & expiry dates</div>
+
+  <div class="info-wrapper">
+    <span class="info-btn" onclick="toggleInfo()">ℹ️</span>
+  </div>
+
+  <div class="info-box" id="infoBox">
+    <strong>How Monster Codes Work</strong><br><br>
+    • First letter = production month (A = Jan, B = Feb, etc.)<br>
+    • Next two digits = last two digits of the year<br>
+    • Next two digits = day of the month<br>
+    • Remaining characters = facility, line & time<br><br>
+    <strong>Monster cans shelf life:</strong> 2 years (730 days)
+  </div>
+
+  <label for="code">Monster Product Code</label>
+  <input type="text" id="code" placeholder="e.g. K1428DP8">
+
+  <button onclick="decodeMonster()">Decode Code</button>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+function toggleInfo() {
+  const box = document.getElementById("infoBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function decodeMonster() {
+  const code = document.getElementById("code").value.toUpperCase().trim();
+  const resultDiv = document.getElementById("result");
+
+  if (code.length < 5) {
+    resultDiv.innerHTML = '<span class="error">Invalid code format.</span>';
+    return;
+  }
+
+  const months = "ABCDEFGHIJKL";
+  const monthLetter = code.charAt(0);
+  const monthIndex = months.indexOf(monthLetter);
+
+  if (monthIndex === -1) {
+    resultDiv.innerHTML = '<span class="error">Invalid month letter.</span>';
+    return;
+  }
+
+  const month = monthIndex; // JS months start at 0
+  const year = 2000 + parseInt(code.substr(1, 2));
+  const day = parseInt(code.substr(3, 2));
+
+  if (isNaN(year) || isNaN(day)) {
+    resultDiv.innerHTML = '<span class="error">Invalid date values.</span>';
+    return;
+  }
+
+  const productionDate = new Date(year, month, day);
+
+  const expiryDate = new Date(productionDate);
+  expiryDate.setFullYear(expiryDate.getFullYear() + 2);
+
+  resultDiv.innerHTML = `
+    <strong>Decoded Results</strong><br><br>
+    <strong>Production Date:</strong> ${productionDate.toDateString()}<br>
+    <strong>Expiry Date:</strong> ${expiryDate.toDateString()}<br><br>
+    <strong>Shelf Life:</strong> 2 years
+  `;
+}
+</script>
+
+</body>
+</html>
