@@ -1,128 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enriquez Shortcut</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enriquez Shortcut</title>
 
-    <style>
+<style>
+/* =========================
+   Animated Gradient
+========================= */
+@keyframes gradient-wave-custom {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
 
-        /* Animated Gradient - Wave Motion */
-      @keyframes gradient-wave-custom {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
+/* =========================
+   Global Reset
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .animated-gradient {
-        
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* =========================
+   Body Layout
+========================= */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #4ECDC4 0%, #A29BFE 49%, #6C5CE7 100%);
+    background-size: 400% 400%;
+    animation: gradient-wave-custom 10s ease-in-out infinite;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #4ECDC4 0%, #A29BFE 49%, #6C5CE7 100%);
-            animation: gradient-wave-custom 10s ease-in infinite;
-            background-size: 400% 400%;
-        }
+/* =========================
+   Main Container
+========================= */
+.container {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            width: 100%;
-            flex-direction: column;
-            flex-wrap: nowrap;
-        }
+/* =========================
+   Title
+========================= */
+h1 {
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+}
 
-        .grid {
-            display: flex;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 20px;
-            margin-top: 20px;
-        }
+/* =========================
+   Grid Buttons
+========================= */
+.grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
-        .icon-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: white;
-            border: none;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none; /* Remove underline from links */
-        }
+/* =========================
+   Icon Buttons
+========================= */
+.icon-button {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-        .icon-button img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-        }
+.icon-button img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
 
-        .icon-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
+.icon-button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.25);
+}
 
-        @media (max-width: 600px) {
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
+/* =========================
+   Footer
+========================= */
+footer {
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    background: rgba(0,0,0,0.25);
+    color: white;
+    font-size: 14px;
+    backdrop-filter: blur(6px);
+}
 
-            .icon-button {
-                padding: 10px;
-            }
+/* =========================
+   Mobile
+========================= */
+@media (max-width: 600px) {
+    .icon-button {
+        padding: 12px;
+    }
 
-            .icon-button img {
-                width: 50px;
-                height: 50px;
-            }
-        }
-        h1{
-            color: white;
-        }
-    </style>
+    .icon-button img {
+        width: 55px;
+        height: 55px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="grid">
-            <h1>DECODE EXPIRY CHECKER</h1>
-        </div>
-        <div class="grid">
-            <a href="https://zkian08.github.io/Decode_Expiry/IBC%20Decode%20Site" class="icon-button">
-                <img src="https://www.ibcrootbeer.com/images/logo.png" alt="Icon 1">
-            </a>
-            <a href="https://zkian08.github.io/Decode_Expiry/Monster%20Decode%20Site" class="icon-button">
-                <img src="https://logos-world.net/wp-content/uploads/2020/09/Monster-Energy-Symbol.png" alt="Icon 2">
-            </a>
-            <a href="https://zkian08.github.io/Decode_Expiry/Snapple%20Decode%20Site" class="icon-button">
-                <img src="https://www.snapple.com/images/nav/logo-snapple-white-bg-blue.png" alt="Icon 3">
-            </a>
-            <!-- Add more buttons and links here -->
-        </div>
-        <!-- New  Section -->
+
+<div class="container">
+
+    <h1>DECODE EXPIRY CHECKER</h1>
+
+    <div class="grid">
+        <a href="https://zkian08.github.io/Decode_Expiry/IBC%20Decode%20Site" class="icon-button">
+            <img src="https://www.ibcrootbeer.com/images/logo.png" alt="IBC">
+        </a>
+
+        <a href="https://zkian08.github.io/Decode_Expiry/Monster%20Decode%20Site" class="icon-button">
+            <img src="https://logos-world.net/wp-content/uploads/2020/09/Monster-Energy-Symbol.png" alt="Monster">
+        </a>
+
+        <a href="https://zkian08.github.io/Decode_Expiry/Snapple%20Decode%20Site" class="icon-button">
+            <img src="https://www.snapple.com/images/nav/logo-snapple-white-bg-blue.png" alt="Snapple">
+        </a>
     </div>
-    <footer>
-        <h3>© by Enriquez, Neil Ian || Sphyx Gaming</h3>
-    </footer>
+
+</div>
+
+<footer>
+    © By Enriquez, Neil Ian || Sphyx Gaming 2026
+</footer>
 
 </body>
 </html>
-
-
-
-
-
