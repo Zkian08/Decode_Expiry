@@ -1,134 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>IBC Root Beer Code Decoder</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>IBC Root Beer Code Decoder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #ed7272;
-      background: linear-gradient(43deg, rgba(237, 114, 114, 1) 1%, rgba(255, 201, 115, 1) 53%, rgba(212, 153, 108, 1) 100%);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      color: #333;
-    }
+/* =====================
+   Body Layout
+===================== */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    43deg,
+    rgba(237, 114, 114, 1) 1%,
+    rgba(255, 201, 115, 1) 53%,
+    rgba(212, 153, 108, 1) 100%
+  );
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #333;
+}
 
-    .card {
-      width: 100%;
-      max-width: 420px;
-      background: #FFFFFF;
-      border-radius: 14px;
-      padding: 28px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-    }
+/* =====================
+   Center Wrapper
+===================== */
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
 
-    h1 {
-      margin-top: 0;
-      text-align: center;
-      font-size: 22px;
-      margin-bottom: 6px;
-    }
+/* =====================
+   Card
+===================== */
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
 
-    .subtitle {
-      text-align: center;
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 24px;
-    }
+h1 {
+  margin-top: 0;
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
 
-    label {
-      font-size: 14px;
-      font-weight: 600;
-      display: block;
-      margin-bottom: 6px;
-    }
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+}
 
-    input {
-      width: 100%;
-      padding: 12px 14px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #dcdcdc;
-      outline: none;
-      transition: border-color 0.2s;
-    }
+label {
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
 
-    input:focus {
-      border-color: #4a90e2;
-    }
+input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  outline: none;
+  transition: border-color 0.2s;
+}
 
-    button {
-      width: 100%;
-      margin-top: 16px;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      background: #C26B29;
-      color: #ffffff;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-    }
+input:focus {
+  border-color: #4a90e2;
+}
 
-    button:hover {
-      background: #3b7fc4;
-    }
+button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background: #C26B29;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
 
-    button:active {
-      transform: scale(0.98);
-    }
+button:hover {
+  background: #a65b23;
+}
 
-    .result {
-      margin-top: 22px;
-      padding: 16px;
-      background: #f3f6fa;
-      border-radius: 10px;
-      font-size: 14px;
-      line-height: 1.6;
-    }
+button:active {
+  transform: scale(0.98);
+}
 
-    .result strong {
-      color: #000;
-    }
+.result {
+  margin-top: 22px;
+  padding: 16px;
+  background: #f3f6fa;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
 
-    .error {
-      color: #b00020;
-      font-weight: 600;
-    }
+.result strong {
+  color: #000;
+}
 
-    .info-wrapper {
-      text-align: right;
-      margin-bottom: 8px;
-    }
+.error {
+  color: #b00020;
+  font-weight: 600;
+}
 
-    .info-btn {
-      cursor: pointer;
-      font-size: 18px;
-    }
+.info-wrapper {
+  text-align: right;
+  margin-bottom: 8px;
+}
 
-    .info-box {
-      display: none;
-      background: #f3f6fa;
-      border-radius: 10px;
-      padding: 14px;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-bottom: 16px;
-    }
-  </style>
+.info-btn {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.info-box {
+  display: none;
+  background: #f3f6fa;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* =====================
+   Footer
+===================== */
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  font-size: 13px;
+  color: #333;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(6px);
+}
+</style>
 </head>
+
 <body>
 
+<div class="main">
   <div class="card">
     <h1>IBC Code Decoder</h1>
     <div class="subtitle">Decode production & expiry dates</div>
@@ -145,87 +178,76 @@
       • Remaining characters = facility & line<br><br>
       <strong>Shelf Life:</strong> 360 days from production date
     </div>
-    
-
 
     <label for="code">IBC Product Code</label>
-
-
     <input type="text" id="code" placeholder="e.g. F4177DP2">
 
     <button onclick="decodeIBC()">Decode Code</button>
 
     <div class="result" id="result"></div>
   </div>
-  <script>
-    function decodeIBC() {
-      const code = document.getElementById("code").value.toUpperCase().trim();
-      const resultDiv = document.getElementById("result");
+</div>
 
-      if (code.length < 7) {
-        resultDiv.innerHTML = '<span class="error">Invalid code format.</span>';
-        return;
-      }
+<footer>
+  © By Enriquez, Neil Ian || Sphyx Gaming 2026
+</footer>
 
-      // Month letter (I skipped)
-      const letters = "ABCDEFGHJKLM";
-      const monthLetter = code.charAt(0);
-      const monthIndex = letters.indexOf(monthLetter);
+<script>
+function decodeIBC() {
+  const code = document.getElementById("code").value.toUpperCase().trim();
+  const resultDiv = document.getElementById("result");
 
-      if (monthIndex === -1) {
-        resultDiv.innerHTML = '<span class="error">Invalid month letter.</span>';
-        return;
-      }
+  if (code.length < 7) {
+    resultDiv.innerHTML = '<span class="error">Invalid code format.</span>';
+    return;
+  }
 
-      const monthFromLetter = monthIndex + 1;
+  const letters = "ABCDEFGHJKLM";
+  const monthLetter = code.charAt(0);
+  const monthIndex = letters.indexOf(monthLetter);
 
-      // Year
-      const yearDigit = parseInt(code.charAt(1));
-      if (isNaN(yearDigit)) {
-        resultDiv.innerHTML = '<span class="error">Invalid year digit.</span>';
-        return;
-      }
+  if (monthIndex === -1) {
+    resultDiv.innerHTML = '<span class="error">Invalid month letter.</span>';
+    return;
+  }
 
-      const year = 2020 + yearDigit;
+  const monthFromLetter = monthIndex + 1;
+  const yearDigit = parseInt(code.charAt(1));
 
-      // Julian day
-      const julianDay = parseInt(code.substr(2, 3));
-      if (isNaN(julianDay) || julianDay < 1 || julianDay > 366) {
-        resultDiv.innerHTML = '<span class="error">Invalid Julian date.</span>';
-        return;
-      }
+  if (isNaN(yearDigit)) {
+    resultDiv.innerHTML = '<span class="error">Invalid year digit.</span>';
+    return;
+  }
 
-      // Production date
-      const productionDate = new Date(year, 0);
-      productionDate.setDate(julianDay);
+  const year = 2020 + yearDigit;
+  const julianDay = parseInt(code.substr(2, 3));
 
-      // Expiry date (360 days)
-      const expiryDate = new Date(productionDate);
-      expiryDate.setDate(expiryDate.getDate() + 360);
+  if (isNaN(julianDay) || julianDay < 1 || julianDay > 366) {
+    resultDiv.innerHTML = '<span class="error">Invalid Julian date.</span>';
+    return;
+  }
 
-      resultDiv.innerHTML = `
-        <strong>Decoded Results</strong><br><br>
-        <strong>Month Letter:</strong> ${monthLetter} (Month ${monthFromLetter})<br>
-        <strong>Year:</strong> ${year}<br>
-        <strong>Julian Day:</strong> ${julianDay}<br><br>
-        <strong>Production Date:</strong> ${productionDate.toDateString()}<br>
-        <strong>Expiry Date:</strong> ${expiryDate.toDateString()}
-      `;
-    }
+  const productionDate = new Date(year, 0);
+  productionDate.setDate(julianDay);
 
-    function toggleInfo() {
-      const box = document.getElementById("infoBox");
-      box.style.display = box.style.display === "block" ? "none" : "block";
-    }
+  const expiryDate = new Date(productionDate);
+  expiryDate.setDate(expiryDate.getDate() + 360);
 
-  </script>
+  resultDiv.innerHTML = `
+    <strong>Decoded Results</strong><br><br>
+    <strong>Month Letter:</strong> ${monthLetter} (Month ${monthFromLetter})<br>
+    <strong>Year:</strong> ${year}<br>
+    <strong>Julian Day:</strong> ${julianDay}<br><br>
+    <strong>Production Date:</strong> ${productionDate.toDateString()}<br>
+    <strong>Expiry Date:</strong> ${expiryDate.toDateString()}
+  `;
+}
+
+function toggleInfo() {
+  const box = document.getElementById("infoBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+</script>
 
 </body>
 </html>
-
-
-
-
-
-
-
